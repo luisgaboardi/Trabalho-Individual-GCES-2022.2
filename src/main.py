@@ -1,3 +1,4 @@
+import json
 import os
 
 from parser.YAML_parser import YAMLParser
@@ -18,15 +19,18 @@ def get_config():
     
         features_configs, columns_set_alias = featureEngineringParser(filepath).parse(config['feature_engineering'])
         del config['feature_engineering']
+        json_features_config = json.dumps(json.loads(features_configs), indent=2)
         
         model_configs = modelParser(columns_set_alias).parse(config['model'])
         del config['model']
+        json_model_configs = json.dumps(json.loads(model_configs), indent=2)
+
         
         print("FEATURES")
-        print(features_configs)
-        print(3*'\n')
+        print(json_features_config)
+        print(2*'\n')
         print(20*'-')
-        print(3*'\n')
-        print(model_configs)
+        print(2*'\n')
+        print(json_model_configs)
          
 get_config()
